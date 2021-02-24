@@ -4,6 +4,7 @@ const { GENESIS_DATA } = require('./config');
 
 
 class Block {
+  // all blocks should have timestamp, last hash, hash, and data
   constructor({ timestamp, lastHash, hash, data }) {
     this.timestamp = timestamp;
     this.lastHash = lastHash;
@@ -17,6 +18,7 @@ class Block {
     return new this(GENESIS_DATA);
   }
 
+  // create/mine a block
   static mineBlock({ lastBlock, data}) {
     const timestamp = Date.now();
     const lastHash = lastBlock.hash;
