@@ -22,10 +22,11 @@ class Blockchain {
     };
 
 
-    for (let i=1; i < chain.length - 1; i++) {
+    for (let i=1; i < chain.length; i++) {
       const { timestamp, lastHash, hash, data, nonce, difficulty } = chain[i];
       const lastBlock = chain[i-1];
       const calculatedHash = cryptoHash(timestamp, lastHash, data, nonce, difficulty);
+      const lastDifficulty = lastBlock.difficulty;
 
       // if the hash and lastHash don't match, return false
       if (lastHash !== lastBlock.hash) return false;
@@ -33,6 +34,8 @@ class Blockchain {
       // if the hash doesn't match our calculated hash, something was tampered
       // return false
       if (calculatedHash !== hash) return false;
+
+      if (Math.abs(lastDifficulty - difficulty) > 1) return false;
 
     }
     return true;
